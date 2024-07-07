@@ -13,6 +13,7 @@ import { io, Socket } from 'socket.io-client';
 })
 export class AppComponent {
     private socket?: Socket;
+    private connectedAt?: number;
     public isConnected = signal<boolean>(false);
 
     constructor(
@@ -31,13 +32,15 @@ export class AppComponent {
             this.socket = io();
             this.socket.on('connect', () => {
                 this.isConnected.set(this.socket!.connected);
-                console.log('WebSocket Connected');
+                this.connectedAt = Date.now();
+                console.log('Socket Connected');
             });
             this.socket.on('disconnect', (reason) => {
                 this.isConnected.set(this.socket!.connected);
-                console.log('WebSocket disconnected', reason);
+                const timeConnected = Math.round((Date.now() - this.connectedAt!) / 1000);
+                console.log(`Socket disconnected after ${timeConnected} seconds. Reason: ${reason}`);
             });
-            this.socket.io.on('reconnect', () => console.log('WebSocket reconnected'));
+            this.socket.io.on('reconnect', () => console.log('Socket reconnected'));
         });
     }
 }
