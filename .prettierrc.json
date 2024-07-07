@@ -1,0 +1,37 @@
+{
+    "singleQuote": true,
+    "trailingComma": "all",
+    "useTabs": false,
+    "printWidth": 120,
+    "tabWidth": 4,
+    "semi": true,
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "htmlWhitespaceSensitivity": "strict",
+    "overrides": [
+        {
+            "files": "*.js",
+            "options": {
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": "*.ts",
+            "options": {
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": "*.scss",
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": "*.svg",
+            "options": {
+                "parser": "html"
+            }
+        }
+    ]
+}
