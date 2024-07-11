@@ -9,7 +9,15 @@
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "serve:ssr": "node dist/server/server.mjs",
-        "serve:ssr:dev": "node --inspect dist/server/server.mjs"
+        "serve:ssr:dev": "node --inspect dist/server/server.mjs",
+        "serve:ssr:dev:watch": "nodemon --inspect dist/server/server.mjs"
+    },
+    "nodemonConfig": {
+        "delay": 2500,
+        "ext": "mjs,html",
+        "watch": [
+            "dist/server/"
+        ]
     },
     "private": true,
     "dependencies": {
