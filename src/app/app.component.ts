@@ -1,5 +1,5 @@
 import { isPlatformServer } from '@angular/common';
-import { ApplicationRef, Component, Inject, NgZone, PLATFORM_ID, signal } from '@angular/core';
+import { AfterViewInit, ApplicationRef, Component, Inject, NgZone, PLATFORM_ID, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { first } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
@@ -11,7 +11,7 @@ import { io, Socket } from 'socket.io-client';
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
     private socket?: Socket;
     private connectedAt?: number;
     public isConnected = signal<boolean>(false);
@@ -22,14 +22,14 @@ export class AppComponent {
         private zone: NgZone,
     ) {}
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         this.appRef.isStable.pipe(first(Boolean)).subscribe(() => this.connect());
     }
 
     private connect() {
         if (isPlatformServer(this.platformId)) return;
         this.zone.runOutsideAngular(() => {
-            this.socket = io();
+            this.socket = io({ transports: ['websocket'] });
             this.socket.on('connect', () => {
                 this.isConnected.set(this.socket!.connected);
                 this.connectedAt = Date.now();

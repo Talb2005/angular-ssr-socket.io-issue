@@ -46,7 +46,7 @@ function run(): void {
 
     const httpServer = createServer(app);
 
-    const io = new Server(httpServer, { pingInterval: 2000, pingTimeout: 3000 });
+    const io = new Server(httpServer, { pingInterval: 2000, pingTimeout: 3000, transports: ['websocket'] });
 
     io.on('connection', (socket: any) => {
         console.log('a user connected');
